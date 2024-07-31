@@ -4,7 +4,7 @@ import sys, os
 import matplotlib.pyplot as plt
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
-from minjerk_penalty import path_planning
+from minjerk import minimum_jerk_trajectory
 
 def test():
     dt = 0.01  # step size
@@ -23,7 +23,7 @@ def test():
 
     t_list = [0.0, 1.0, 2.0, 2.2]
     t_list = np.array(t_list)
-    [position, velocity, acceleration, jerk, t_stamp] = path_planning(x_list, v_list, a_list, t_list, dt, n_list)
+    position, velocity, acceleration, jerk, t_stamp = minimum_jerk_trajectory(x_list, v_list, a_list, t_list, dt)
 
     nr_dof = position.shape[0]
     legend_position = 'lower right'

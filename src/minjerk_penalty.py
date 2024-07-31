@@ -3,7 +3,7 @@ from typing import Tuple, List
 
 from get_terms import *
 from mytypes import Array, Array2D
-
+import utils as fcs
 
 def cal_parameter(x_0, x_f, t_0, t_f, n):
     term_inital = [cal_position_term(t_0, n),
@@ -62,70 +62,6 @@ def get_path(x_temp, v_temp, a_temp, t_temp, n, dt):
     x_f_list = np.hstack((x_temp[:, 1].reshape(-1, 1), v_temp[:, 1].reshape(-1, 1), a_temp[:, 1].reshape(-1, 1)))
     return cal_path(x_0_list, x_f_list, t_temp[0], t_temp[1], dt, n)
 
-def shape_check(*arrays: np.ndarray) -> List:
-    """
-    Validate and convert input arrays to 2D arrays, 
-    and check if all arrays have the same dimensions.
-    
-    parameters:
-    -----------
-    *arrays : a variable number of numpy arrays to be validated and converted.
-    
-    returns:
-    --------
-    converted_arrays: a list of 2D numpy arrays with the same shape if all inputs have consistent dimensions.
-        
-    raises:
-    -------
-    ValueError
-        If the input arrays have inconsistent dimensions.
-    """
-    converted_arrays = []
-    target_shape = None
-
-    for array in arrays:
-        # Check if the input is a numpy array
-        if not isinstance(array, np.ndarray):
-            raise TypeError("All inputs must be numpy arrays.")
-
-        # Convert to 2D if necessary
-        if array.ndim == 1:
-            array = array[np.newaxis, :]  # Convert 1D array to 2D (1, n)
-
-        # Check if all arrays have the same shape
-        if target_shape is None:
-            target_shape = array.shape
-        elif array.shape != target_shape:
-            raise ValueError("All input arrays must have the same shape.")
-
-        converted_arrays.append(array)
-    return converted_arrays
-
-def is_integer_multiple(a: float, b: float, 
-                        tolerance=1e-12):
-    """
-    Check if float a is an integer multiple of float b.
-
-    parameters:
-    -----------
-    a: the number to be checked
-    b: the reference number
-    tolerance: the tolerance for floating-point comparison
-
-    returns:
-    --------
-    p: the integer multiple
-    bool: true if a is an integer multiple of b, otherwise False
-    """
-    if b == 0:
-        raise ValueError(f"Divisor cannot be zero.")
-    
-    # Calculate the ratio
-    ratio = a / b
-    
-    # Check if the ratio is approximately an integer
-    return round(ratio), abs(round(ratio) - ratio) < tolerance
-
 def path_planning(X: Array2D, V: Array2D, 
                   A: Array2D, T: Array, dt: float, 
                   N: Array2D) -> tuple:
@@ -149,21 +85,9 @@ def path_planning(X: Array2D, V: Array2D,
     jerk: the trajectory of jerks, in nr_dof x nr_step
     t_stamp: then time stamp
     """
-    X, V, A = shape_check(X, V, A)
     nr_dof = X.shape[0]
     nr_point = X.shape[1]
-
-    if N.ndim == 1:
-        N = N.reshape(1, -1)
-
-    if N.shape[1] != (X.shape[1]-1):
-        raise ValueError(f'Point and constraint dimensions do not match')
-
-    ratio, is_integer = is_integer_multiple(T[-1]-T[0], dt)
-    if is_integer is False:
-        raise ValueError(f'The time length is not divisible by the step length!')
-    
-    nr_step = ratio + 1
+    nr_step = fcs.get_steps(T[-1]-T[0], dt) + 1
     t_stamp = np.linspace(T[0], T[-1], nr_step, endpoint=True)
 
     position     = np.zeros((nr_dof, nr_step))
