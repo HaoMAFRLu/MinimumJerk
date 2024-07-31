@@ -3,7 +3,7 @@ import numpy as np
 import sys, os
 import matplotlib.pyplot as plt
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'minimum_jerk')))
 from minjerk import minimum_jerk_trajectory
 
 def test():
