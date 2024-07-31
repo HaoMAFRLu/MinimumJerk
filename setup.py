@@ -4,15 +4,14 @@ with open("README.md", "r") as file:
     long_description = file.read()
 
 setup(
-    name="minimum_jerk_algorithm",
+    name="minimum_jerk",
     version="0.0.2",
     author="Hao Ma",
     author_email="hao.ma@tuebingen.mpg.de",
     description="Path planning using minimum jerk algorithm.",
     long_description=long_description,
     url="https://github.com/HaoMAFRLu/MinimumJerk",
-    packages=find_packages(where='src'),
-    package_dir={'': 'src'},
+    packages=find_packages(),
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
         "Intended Audience :: Science/Research",

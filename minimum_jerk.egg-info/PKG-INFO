@@ -1,0 +1,16 @@
+Metadata-Version: 1.2
+Name: minimum-jerk
+Version: 0.0.2
+Summary: Path planning using minimum jerk algorithm.
+Home-page: https://github.com/HaoMAFRLu/MinimumJerk
+Author: Hao Ma
+Author-email: hao.ma@tuebingen.mpg.de
+License: UNKNOWN
+Description: # MinimumJerk
+        TBD
+Platform: UNKNOWN
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3.8
+Requires-Python: >=3.8

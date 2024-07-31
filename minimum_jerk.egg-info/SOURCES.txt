@@ -1,0 +1,13 @@
+README.md
+setup.py
+minimum_jerk/__init__.py
+minimum_jerk/get_terms.py
+minimum_jerk/minjerk.py
+minimum_jerk/minjerk_analytic.py
+minimum_jerk/minjerk_penalty.py
+minimum_jerk/mytypes.py
+minimum_jerk/utils.py
+minimum_jerk.egg-info/PKG-INFO
+minimum_jerk.egg-info/SOURCES.txt
+minimum_jerk.egg-info/dependency_links.txt
+minimum_jerk.egg-info/top_level.txt
